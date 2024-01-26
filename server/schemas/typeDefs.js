@@ -14,7 +14,7 @@ type Player {
 
 }
 
-type HighScore {
+type PlayerData {
     level: Int
     highScore: Int
     unlocked: Bool
@@ -36,12 +36,6 @@ type Auth {
     user: User
 }
 
-input SaveScoreInput {
-    level: Int
-    highScore: Int
-    unlocked: Bool
-}
-
 type Query {
     me: User
     getLevel(level: Int): Level
@@ -50,10 +44,7 @@ type Query {
 type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
-    saveScore(
-        maxLevel: Int
-        highScores: SaveScoreInput
-    ): Player
+    saveScore(maxLevel: Int, level: Int, highScore: Int, unlocked: Bool ): User
 }
 `;
 

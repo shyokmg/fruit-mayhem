@@ -1,13 +1,7 @@
 const { Schema } = require('mongoose');
 
-const playerSchema = new Schema({
-  maxLevel: {
-    type: Number,
-    default: 1,
-  },
-  
-  highScores: [
-    {
+const playerDataSchema = new Schema({
+
       level: {
         type: Number,
         required: true,
@@ -20,8 +14,7 @@ const playerSchema = new Schema({
         type: Boolean,
         required: true
       },
-    },
-  ],
+  
 });
 
-module.exports = playerSchema;
+module.exports = playerDataSchema;

@@ -1,31 +1,76 @@
-const { User } = require('../models');
-const  { signToken, AuthenticationError} = require('../utils/auth');
+const { User, Level } = require("../models");
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
-    Mutation: {
-        addUser: async (parent, { username, password }) => {
-            const user = await User.create({ username, password});
-            const token = signToken(user);
-            return { token, user};
-        },
+  Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findOne({ _id: context.user._id });
+        return user;
+      }
+      throw AuthenticationError;
+    },
 
-        login: async (parent, {username, password}) => {
-            const user = await User.findOne({ username });
+    getLevel: async (parent, { level }) => {
+      return Level.findOne({ level });
+    },
+  },
 
-            if (!user) {
-                throw AuthenticationError
-            }
+  Mutation: {
+    addUser: async (parent, { username, password }) => {
+      const user = await User.create({ username, password });
+      const token = signToken(user);
+      return { token, user };
+    },
 
-            const correctPw = await user.isCorrectPassword(password);
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
-            if (!correctPw) {
-                throw AuthenticationError;
-            }
+      if (!user) {
+        throw AuthenticationError;
+      }
 
-            const token = signToken(user);
-            return {token, user};
-        },
-    }
-}
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
+
+    saveScore: async (
+      parent,
+      { maxLevel, level, highScore, unlocked },
+      context
+    ) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: {
+              maxLevel,
+              playerData: {
+                level,
+                highScore,
+              },
+            },
+          },
+          {
+            $addToSet: {
+              playerData: {
+                level: maxLevel,
+                unlocked,
+              },
+            },
+          }
+        );
+        return updatedUser;
+      }
+      throw AuthenticationError;
+    },
+  },
+};
 
 module.exports = resolvers;

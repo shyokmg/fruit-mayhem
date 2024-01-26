@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // import schema from Book.js
-const playerSchema = require('./Player');
+const playerDataSchema = require('./PlayerData');
 
 const userSchema = new Schema(
   {
@@ -24,7 +24,12 @@ const userSchema = new Schema(
       required: true,
     },
 
-    playerData: [playerSchema]
+    maxLevel: {
+      type: Number,
+      default: 1
+    },
+
+    playerData: [playerDataSchema]
 
   },
   // set this to use virtual below
