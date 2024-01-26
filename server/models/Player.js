@@ -12,7 +12,7 @@ const playerSchema = new Schema({
         type: Number,
         required: true,
       },
-      highscore: {
+      highScore: {
         type: Number,
         default: 0,
       },
