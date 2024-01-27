@@ -1,0 +1,66 @@
+[
+  {
+    "username": "user1",
+    "email": "user1@game.com",
+    "password": "password01",
+    "playerData": [
+      {
+        "level": 1,
+        "highScore": 0,
+        "unlocked": true
+      },
+      {
+        "level": 2,
+        "highScore": 0,
+        "unlocked": false
+      },
+      {
+        "level": 3,
+        "highScore": 0,
+        "unlocked": false
+      },
+      {
+        "level": 4,
+        "highScore": 0,
+        "unlocked": false
+      },
+      {
+        "level": 5,
+        "highScore": 0,
+        "unlocked": false
+      }
+    ]
+  },
+  {
+    "username": "user2",
+    "email": "user2game.com",
+    "password": "password02",
+    "playerData": [
+        {
+          "level": 1,
+          "highScore": 0,
+          "unlocked": true
+        },
+        {
+          "level": 2,
+          "highScore": 0,
+          "unlocked": false
+        },
+        {
+          "level": 3,
+          "highScore": 0,
+          "unlocked": false
+        },
+        {
+          "level": 4,
+          "highScore": 0,
+          "unlocked": false
+        },
+        {
+          "level": 5,
+          "highScore": 0,
+          "unlocked": false
+        }
+      ]
+  }
+]

@@ -1,5 +1,6 @@
 const { User, Level } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
+const defaultLevels = require("../utils/defaultLevels.json");
 
 const resolvers = {
   Query: {
@@ -17,8 +18,9 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, password }) => {
-      const user = await User.create({ username, password });
+    addUser: async (parent, { username, email, password }) => {
+      const playerData = defaultLevels;
+      const user = await User.create({ username, email, password, playerData });
       const token = signToken(user);
       return { token, user };
     },
