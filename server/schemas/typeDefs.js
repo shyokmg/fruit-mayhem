@@ -5,25 +5,19 @@ type User {
     username: String
     email: String
     password: String
-    playerData: [Player]
-}
-
-type Player {
-    maxLevel : Int
-    highScores: [HighScore]
-
+    playerData: [PlayerData]
 }
 
 type PlayerData {
     level: Int
     highScore: Int
-    unlocked: Bool
+    unlocked: Boolean
 }
 
 input PlayerDataInput {
     level: Int
     highScore: Int
-    unlocked: Bool
+    unlocked: Boolean
 }
 
 type Level {
@@ -34,7 +28,7 @@ type Level {
 type NumberOfObject {
     fruits: Int
     powerUps: Int
-    hazards: INt
+    hazards: Int
 }
 
 type Auth {
@@ -50,7 +44,7 @@ type Query {
 type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!, playerData: PlayerDataInput): Auth
-    saveScore(maxLevel: Int, level: Int, highScore: Int, unlocked: Bool ): User
+    saveScore(maxLevel: Int, level: Int, highScore: Int, unlocked: Boolean ): User
 }
 `;
 
