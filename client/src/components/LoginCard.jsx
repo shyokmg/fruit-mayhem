@@ -32,7 +32,8 @@ const tabList = [
     <>
       <Card
         style={{
-          width: '50%',
+          width: '35%',
+          margin: '100px'
         }}
         // title="Card title"
         tabList={tabList}

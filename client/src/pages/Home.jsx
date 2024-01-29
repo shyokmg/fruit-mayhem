@@ -1,30 +1,59 @@
 // import { useQuery } from '@apollo/client';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Auth from '../utils/auth';
-import LoginForm from '../components/LoginForm';
-import LoginCard from '../components/LoginCard'
+import { useState } from "react";
+import { Flex, Layout, Button, theme } from "antd";
+const { Header, Content, Footer } = Layout;
+import { Link } from "react-router-dom";
+import Auth from "../utils/auth";
+import LoginCard from "../components/LoginCard";
 
 // import { QUERY_PROFILES } from '../utils/queries';
 
 const Home = () => {
-    console.log(Auth.loggedIn())
-    console.log(Auth.getToken())
+    const [startGamePressed, setStartGamePressed] = useState(false);
+
+  const handleStartGame = () => {
+    setStartGamePressed(true);
+    // Add any additional logic or functionality here when the "Start Game" button is pressed
+  };
   return (
     <main>
-      <div>
-        <div>
-          {Auth.loggedIn() ? (
-            <div>
-                <div><Link onClick={Auth.logout}>logout</Link></div>
+        <Flex justify="center" align="center">
+
+      <Layout
+        style={{
+          background: "yellow",
+          width: 1024,
+          height: 560,
+        }}
+      >
+      
+        <Content>
+            {Auth.loggedIn() ? (
+                <div style={{
+                    margin: '200px'
+                  }}>
+                <Flex justify="center" align="center" gap='middle' vertical>
+                {startGamePressed ? (
+                  <p>Game started! Here is the game content.</p>
+                ) : (
+                  <>
+                  
+                  <Button onClick={handleStartGame}>Start Game</Button>
+                  <Button>Options</Button>
+                  <Button onClick={Auth.logout}>logout</Button>
+                  </>
+                )}
+              </Flex>
+
                 </div>
-          ):(
-            <div>
-                <div><LoginCard /></div>
-            </div>
-          )}
-        </div>
-      </div>
+            ) : (
+                <Flex justify="center" align="center">
+                    <LoginCard />
+                </Flex>
+            )}
+        </Content>
+      </Layout>
+        </Flex>
     </main>
   );
 };
