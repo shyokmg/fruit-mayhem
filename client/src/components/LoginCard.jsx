@@ -35,7 +35,7 @@ const tabList = [
           width: '35%',
           margin: '100px'
         }}
-        // title="Card title"
+        
         tabList={tabList}
         activeTabKey={activeTabKey1}
         onTabChange={onTab1Change}
