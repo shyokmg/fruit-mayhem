@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Card, Row, Col } from 'antd';
-import LevelCards from './LevelCards';
+import { Flex, Card, Row, Col, Button } from 'antd';
+import LevelCards from '../components/GameUI/LevelCards';
+import { useNavigate } from 'react-router-dom';
 
 const GameLevels = () => {
  const sampleData = [
@@ -35,10 +36,20 @@ const GameLevels = () => {
         isUnlocked: false,
     }
  ]
+ const navigate = useNavigate();
 
+ const handleBackButton = () => {
+ navigate('/')
+     //   setStartGamePressed(true);
+   // Add any additional logic or functionality here when the "Start Game" button is pressed
+ };
  
   return (
-<>
+
+<div style={{ margin: "100px", }}>
+<Flex justify="center" align="center" gap="middle" vertical>
+
+    <Button onClick={handleBackButton}>Back</Button>
 <Row gutter={[16, 32]}>
 
 {sampleData.map((levels) => (
@@ -52,7 +63,10 @@ const GameLevels = () => {
     </Col>
 ))}
 </Row>
-</>
+</Flex>
+</div>
+
+
   );
 };
 
