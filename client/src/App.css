@@ -1,6 +1,11 @@
 body {
   font-family: 'Rubik', sans-serif;
-  background-color: black;
+  margin: 0;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
 /* h1,

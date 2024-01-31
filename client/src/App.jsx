@@ -10,6 +10,11 @@ import HeaderComp from "./components/HeaderComp";
 import FooterComp from "./components/FooterComp";
 import { Outlet } from "react-router-dom";
 import { Flex, Layout, Button, theme } from "antd";
+
+// test
+import Game from "./components/Game";
+import GamePage from "./pages/GamePage";
+
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
@@ -35,23 +40,25 @@ const client = new ApolloClient({
 
 function App() {
   return (
+    <GamePage />
+
     //  create an Apollo Provider to make every request work with the Apollo Server.
 
-    <ApolloProvider client={client}>
-      <HeaderComp />
-      <Flex justify="center" align="center">
-        <Layout
-          style={{
-            background: "yellow",
-            width: 1024,
-            height: 560,
-          }}
-        >
-          <Outlet />
-        </Layout>
-      </Flex>
-      <FooterComp />
-    </ApolloProvider>
+    // <ApolloProvider client={client}>
+    //   <HeaderComp />
+    //   <Flex justify="center" align="center">
+    //     <Layout
+    //       style={{
+    //         background: "black",
+    //         width: 1024,
+    //         height: 576,
+    //       }}
+    //     >
+    //       <Outlet />
+    //     </Layout>
+    //   </Flex>
+    //   <FooterComp />
+    // </ApolloProvider>
   );
 }
 
