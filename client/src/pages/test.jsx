@@ -11,7 +11,10 @@ import playerRunLeft from "../assets/playerRunLeft.png";
 import cherries from "../assets/cherries.png"
 // import fruitDespawn from "../assets/fruitDespawn.png"
 
+// const [test, setGameOver] = useState(false);
 const speedDown = 200;
+let score = 0;
+let test2 = false;
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -25,7 +28,6 @@ class GameScene extends Phaser.Scene {
     this.textTime;
     this.timedEvent;
     this.remainingTime;
-    this.testPoint;
 
   }
 
@@ -48,8 +50,6 @@ class GameScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32
     });
-
-    this.game.events.emit('gameOver', false);
   }
 
   create() {
@@ -57,7 +57,7 @@ class GameScene extends Phaser.Scene {
     const ground = this.physics.add.staticGroup();
     ground.create(0, 496, "ground").setOrigin(0, 0).refreshBody();
     this.player = this.physics.add.sprite(100, 250, "playerIdle");
-    
+
     this.target = this.physics.add
       .sprite(0, 0, "cherries")
       .setOrigin(0, 0);
@@ -111,23 +111,23 @@ class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.target, this.player, this.targetHit, null, this)
     this.cursor = this.input.keyboard.createCursorKeys();
 
-    this.game.events.emit('storedScore', this.points);
-    this.game.events.emit('storeRemainingTime', Math.round(this.remainingTime).toString());
-    // this.textTime = this.add.text(10, 10, "Remaining Time: 00", {
-    //   font: "25px Arial",
-    //   fill: "#000000"
-    // });
+    this.textScore = this.add.text(1024 - 120, 10, "Score:0", {
+      font: "25px Arial",
+      fill: "#000000"
+    });
 
-    this.timedEvent  = this.time.delayedCall(30000, this.gameOver, [], this)
+    this.textTime = this.add.text(10, 10, "Remaining Time: 00", {
+      font: "25px Arial",
+      fill: "#000000"
+    });
+
+    this.timedEvent  = this.time.delayedCall(10000, this.gameOver, [], this)
   }
 
   update() {
     const { left, right } = this.cursor;
-    
-
     this.remainingTime = this.timedEvent.getRemainingSeconds();
-    // this.textTime.setText(`Remaining Time: ${Math.round(this.remainingTime).toString()}`)
-    this.game.events.emit('storeRemainingTime', Math.round(this.remainingTime).toString());
+    this.textTime.setText(`Remaining Time: ${Math.round(this.remainingTime).toString()}`)
     this.target.anims.play("cherry", true)
 
     if (this.target.y >= 576) {
@@ -152,18 +152,19 @@ class GameScene extends Phaser.Scene {
   }
 
   targetHit() {
-  
     this.target.setY(0);
     this.target.setX(this.getRandomX());
     // this.target.anims.play("despawn", true)
     this.points++;
-    this.game.events.emit('storedScore', this.points);
-    // this.textScore.setText(`Score: ${this.points}`)
+    score = this.points;
+    // setScore(this.points);
+    this.textScore.setText(`Score: ${this.points}`)
   }
 
   gameOver() {
     console.log('Game Over');
-    this.game.events.emit('gameOver', true);
+    test2 = true
+    
   }
 
 }
@@ -185,12 +186,16 @@ const GamePage = () => {
   };
   
   const {level} = useParams();
+  const [test, setGameOver] = useState(false);
+  if (test2) {
+    setGameOver(true);
+  }
 
   return (
     <div style={{ position: 'relative' }}>
       {/* <h1 style={{ position: 'absolute', top: '0px', left: '480px', zIndex: 1 }}>Level: {level} </h1> */}
       {/* <h1 style={{ position: 'absolute', top: '0px', left: '850px', zIndex: 1 }}>Score: {point} </h1> */}
-      <Game config={config} level={level} />
+      <Game config={config} level={level} score={score} gameOver={test} />
     </div>
   );
 };

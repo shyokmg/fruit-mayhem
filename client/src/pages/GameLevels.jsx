@@ -18,7 +18,7 @@ const GameLevels = () => {
     {
         level: 3,
         highscore: 0,
-        isUnlocked: false,
+        isUnlocked: true,
     },
     {
         level: 4,

@@ -40,25 +40,25 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <GamePage />
+    // <GamePage />
 
     //  create an Apollo Provider to make every request work with the Apollo Server.
 
-    // <ApolloProvider client={client}>
-    //   <HeaderComp />
-    //   <Flex justify="center" align="center">
-    //     <Layout
-    //       style={{
-    //         background: "black",
-    //         width: 1024,
-    //         height: 576,
-    //       }}
-    //     >
-    //       <Outlet />
-    //     </Layout>
-    //   </Flex>
-    //   <FooterComp />
-    // </ApolloProvider>
+    <ApolloProvider client={client}>
+      <HeaderComp />
+      <Flex justify="center" align="center">
+        <Layout
+          style={{
+            background: "black",
+            width: 1024,
+            height: 576,
+          }}
+        >
+          <Outlet />
+        </Layout>
+      </Flex>
+      <FooterComp />
+    </ApolloProvider>
   );
 }
 
