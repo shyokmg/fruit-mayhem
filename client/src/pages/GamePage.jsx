@@ -1,174 +1,18 @@
-import React, { useState } from "react";
-import { useParams } from 'react-router-dom';
-
-import Game from "../components/Game";
+import React, { useEffect, useState, useRef  } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
 import Phaser from "phaser";
-import background from "../assets/background.png";
-import ground from "../assets/ground.png";
-import playerIdle from "../assets/playerIdleRight.png";
-import playerRunRight from "../assets/playerRunRight.png";
-import playerRunLeft from "../assets/playerRunLeft.png";
-import cherries from "../assets/cherries.png"
-// import fruitDespawn from "../assets/fruitDespawn.png"
+import { Button } from 'antd';
+import GameScene from "../components/Scenes/GameScene"
+import InGameUI from "../components/UserInterface/InGameUI";
 
-const speedDown = 200;
+const GameComp = () => {
+  const {level} = useParams();
+  const [score, setScore] = useState(0);
+  const [time, setTime] = useState(0);
+  const [pauseButton, setPauseButton] = useState(false);
+  const [gameOverState, setGameOverState] = useState(false);
+  const gameRef = useRef(null);
 
-class GameScene extends Phaser.Scene {
-  constructor() {
-    super({ key: "GameScene" });
-    this.player;
-    this.playerSpeed = speedDown + 300
-    this.cursor;
-    this.target;
-    this.points = 0;
-    this.textScore;
-    this.textTime;
-    this.timedEvent;
-    this.remainingTime;
-    this.testPoint;
-
-  }
-
-  preload() {
-    this.load.image("background", background);
-    this.load.image("ground", ground);
-    this.load.spritesheet("playerIdle", playerIdle, {
-      frameWidth: 96,
-      frameHeight: 96,
-    });
-    this.load.spritesheet("playerRunRight", playerRunRight, {
-      frameWidth: 96,
-      frameHeight: 96,
-    });
-    this.load.spritesheet("playerRunLeft", playerRunLeft, {
-      frameWidth: 96,
-      frameHeight: 96,
-    });
-    this.load.spritesheet("cherries", cherries, {
-      frameWidth: 32,
-      frameHeight: 32
-    });
-
-    this.game.events.emit('gameOver', false);
-  }
-
-  create() {
-    this.add.image(0, 0, "background").setOrigin(0, 0);
-    const ground = this.physics.add.staticGroup();
-    ground.create(0, 496, "ground").setOrigin(0, 0).refreshBody();
-    this.player = this.physics.add.sprite(100, 250, "playerIdle");
-    
-    this.target = this.physics.add
-      .sprite(0, 0, "cherries")
-      .setOrigin(0, 0);
-
-    this.anims.create({
-      key: "cherry",
-      frames: this.anims.generateFrameNames("cherries", {
-        start: 0,
-        end: 33,
-      }),
-      frameRate: 64,
-      repeat: -1,
-    })
-
-    this.anims.create({
-      key: "idle",
-      frames: this.anims.generateFrameNumbers("playerIdle", {
-        start: 0,
-        end: 21,
-      }),
-      frameRate: 46,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "right",
-      frames: this.anims.generateFrameNumbers("playerRunRight", {
-        start: 0,
-        end: 23,
-      }),
-      frameRate: 50,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "left",
-      frames: this.anims.generateFrameNumbers("playerRunLeft", {
-        start: 0,
-        end: 23,
-      }),
-      frameRate: 50,
-      repeat: -1,
-    });
-
-    this.player.setBounce(0.2);
-    this.player.setCollideWorldBounds(true);
-
-    this.player.body.setGravityY(speedDown);
-    this.target.setMaxVelocity(0, speedDown);
-    this.physics.add.collider(this.player, ground);
-    this.physics.add.overlap(this.target, this.player, this.targetHit, null, this)
-    this.cursor = this.input.keyboard.createCursorKeys();
-
-    this.game.events.emit('storedScore', this.points);
-    this.game.events.emit('storeRemainingTime', Math.round(this.remainingTime).toString());
-    // this.textTime = this.add.text(10, 10, "Remaining Time: 00", {
-    //   font: "25px Arial",
-    //   fill: "#000000"
-    // });
-
-    this.timedEvent  = this.time.delayedCall(30000, this.gameOver, [], this)
-  }
-
-  update() {
-    const { left, right } = this.cursor;
-    
-
-    this.remainingTime = this.timedEvent.getRemainingSeconds();
-    // this.textTime.setText(`Remaining Time: ${Math.round(this.remainingTime).toString()}`)
-    this.game.events.emit('storeRemainingTime', Math.round(this.remainingTime).toString());
-    this.target.anims.play("cherry", true)
-
-    if (this.target.y >= 576) {
-      this.target.setY(0);
-      this.target.setX(this.getRandomX())
-    }
-
-    if (left.isDown) {
-      this.player.setVelocityX(-this.playerSpeed);
-      this.player.anims.play("left", true);
-    } else if (right.isDown) {
-      this.player.setVelocityX(this.playerSpeed);
-      this.player.anims.play("right", true);
-    } else {
-      this.player.setVelocityX(0);
-      this.player.anims.play("idle", true);
-    }
-  }
-
-  getRandomX() {
-    return Math.floor(Math.random() * 1024)
-  }
-
-  targetHit() {
-  
-    this.target.setY(0);
-    this.target.setX(this.getRandomX());
-    // this.target.anims.play("despawn", true)
-    this.points++;
-    this.game.events.emit('storedScore', this.points);
-    // this.textScore.setText(`Score: ${this.points}`)
-  }
-
-  gameOver() {
-    console.log('Game Over');
-    this.game.events.emit('gameOver', true);
-  }
-
-}
-
-const GamePage = () => {
   const config = {
     type: Phaser.AUTO,
     parent: "phaser-container",
@@ -184,15 +28,83 @@ const GamePage = () => {
     },
   };
   
-  const {level} = useParams();
+
+  useEffect(() => {
+    const game = new Phaser.Game(config);
+    gameRef.current = game;
+
+    game.events.on('storedScore', (data) => {
+      setScore(data);
+    });
+
+    game.events.on('storeRemainingTime', (data) => {
+      setTime(data);
+    });
+
+    game.events.on('gameOver', (data) => {
+      if (data) {
+        game.pause(true);
+        setGameOverState(true)
+      }
+    });
+
+    return () => {
+      game.destroy(true);
+    };
+  }, []);
+
+  const navigate = useNavigate();
+  const handlePauseButton = () => setPauseButton((prevButton) => !prevButton);
+  const handleRetryButton = () => window.location.reload() ;
+  const handleExitGame = () => navigate('/');
+
+  useEffect(() => {
+    const game = gameRef.current;
+    if (game) {
+      if (pauseButton) {
+        game.pause();
+      } else {
+        game.resume();
+      }
+    }
+  }, [pauseButton]);
+
+
 
   return (
-    <div style={{ position: 'relative' }}>
-      {/* <h1 style={{ position: 'absolute', top: '0px', left: '480px', zIndex: 1 }}>Level: {level} </h1> */}
-      {/* <h1 style={{ position: 'absolute', top: '0px', left: '850px', zIndex: 1 }}>Score: {point} </h1> */}
-      <Game config={config} level={level} />
-    </div>
+
+    <InGameUI 
+      level ={level}
+      score={score}
+      time={time}
+      pauseButton={pauseButton}
+      gameOverState={gameOverState}
+      handlePauseButton={handlePauseButton}
+      handleRetryButton={handleRetryButton}
+      handleExitGame={handleExitGame}
+    />
+    // <div style={{ position: 'relative' }}>
+    //   <div id="phaser-container">
+    //   <div style={{ position: 'relative' }}>
+    //     <h1 style={{ position: 'absolute', top: '0px', left: '480px', zIndex: 1 }}>Level: {level} </h1>
+    //     <h1 style={{ position: 'absolute', top: '0px', left: '850px', zIndex: 1 }}>Score: {score} </h1>
+    //     <h1 style={{ position: 'absolute', top: '0px', left: '50px', zIndex: 1 }}>Time: {time} </h1>
+    //     {gameOverState ? (
+    //     <>
+    //     <Button onClick={handleRetryButton} style={{ position: 'absolute', top: '200px', left: '480px', zIndex: 1 }}>Retry</Button>
+    //     <Button onClick={handleExitGame} style={{ position: 'absolute', top: '300px', left: '480px', zIndex: 1 }}>Exit </Button>
+    //     </>
+    //     )
+    //     : (
+    //     <Button onClick={handlePauseButton} style={{ position: 'absolute', top: '0px', left: '930px', zIndex: 1 }} >
+    //       {pauseButton ? 'Resume' : 'Pause'}
+    //     </Button>
+
+    //     )}
+    //   </div>
+    // </div>
+    // </div>
   );
 };
 
-export default GamePage;
+export default GameComp;

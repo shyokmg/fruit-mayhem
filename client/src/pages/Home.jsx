@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import LoginCard from "../components/Login/LoginCard";
 import GameLevels from "./GameLevels";
-import MainMenu from "../components/GameUI/MainMenu";
+import MainMenu from "../components/UserInterface/MainMenu";
 
 // import { QUERY_PROFILES } from '../utils/queries';
 
@@ -14,7 +14,11 @@ const Home = () => {
 
 
   return (
-    <main>
+    <main style={{
+      background: "black",
+      width: 1024,
+      height: 576,
+    }}>
         <Content>
           {Auth.loggedIn() ? (
             <div style={{ margin: "100px", }}>

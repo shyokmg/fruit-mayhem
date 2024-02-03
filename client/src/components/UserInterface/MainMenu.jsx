@@ -15,14 +15,10 @@ const MainMenu = () => {
     const [startGamePressed, setStartGamePressed] = useState(false);
     const navigate = useNavigate();
 
-    const handleStartGame = () => {
-    navigate('/gamelevels')
-        //   setStartGamePressed(true);
-      // Add any additional logic or functionality here when the "Start Game" button is pressed
-    };
+    const handleStartGame = () => { navigate('/gamelevels') };
  
   return (
-    <>
+    < >
     <Button onClick={handleStartGame}>Start Game </Button>
     <Button>Options</Button>
     <Button onClick={Auth.logout}>logout</Button>

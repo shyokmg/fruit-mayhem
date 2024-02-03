@@ -5,6 +5,7 @@ type User {
     username: String
     email: String
     password: String
+    maxLevel: Int
     playerData: [PlayerData]
 }
 
