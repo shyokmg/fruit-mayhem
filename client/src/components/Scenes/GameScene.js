@@ -146,8 +146,7 @@ export default class GameScene extends Phaser.Scene {
   update() {
     const { left, right, up } = this.cursor;
     const hitProgress = this.hitTimedEvent.getRemainingSeconds();
-    
-    // console.log(`${isPlayerHit} ${Math.round(hitProgress)}`)
+  
     if (hitProgress === 0) {
       isPlayerHit = false;
     }
@@ -162,7 +161,7 @@ export default class GameScene extends Phaser.Scene {
     if (this.fruitTarget.y >= 576) {
       fruitState = this.getRandomObject(fruitSprite);
       this.fruitTarget.setY(0);
-      // this.fruitTarget.setX(this.getRandomX())
+      
       this.fruitTarget.setX(this.getRandomX()).setScale(fruitState.scale)
       
     }
@@ -200,7 +199,7 @@ export default class GameScene extends Phaser.Scene {
     this.game.events.emit('storedScore', this.points);
     fruitState = this.getRandomObject(fruitSprite)
     this.fruitTarget.setY(0);
-    // this.fruitTarget.setX(this.getRandomX());
+    
     this.fruitTarget.setX(this.getRandomX()).setScale(fruitState.scale)
   }
 

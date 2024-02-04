@@ -11,7 +11,7 @@ import MainMenu from "../components/UserInterface/MainMenu";
 // import { QUERY_PROFILES } from '../utils/queries';
 
 const Home = () => {
-
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   return (
     <main style={{
@@ -20,7 +20,7 @@ const Home = () => {
       height: 576,
     }}>
         <Content>
-          {Auth.loggedIn() ? (
+          {token ? (
             <div style={{ margin: "100px", }}>
               <Flex justify="center" align="center" gap="middle" vertical>
                 <MainMenu />

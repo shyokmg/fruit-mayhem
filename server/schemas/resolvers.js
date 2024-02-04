@@ -49,27 +49,30 @@ const resolvers = {
       context
     ) => {
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $addToSet: {
-              maxLevel,
-              playerData: {
-                level,
-                highScore,
-              },
-            },
-          },
-          {
-            $addToSet: {
-              playerData: {
-                level: maxLevel,
-                unlocked,
-              },
-            },
-          }
-        );
-        return updatedUser;
+
+        const user = await User.findById(context.user._id);
+
+    // Update the maxLevel if the provided level is higher
+    if (maxLevel > user.maxLevel && user.maxLevel <= 5) {
+      user.maxLevel = maxLevel;
+    }
+
+    // Find the playerData entry with the same level and update its highScore
+    const playerDataIndex = user.playerData.findIndex(
+      (data) => data.level === level
+    );
+    if (playerDataIndex !== -1) {
+      // Update the existing playerData entry
+      if (highScore > user.playerData[playerDataIndex].highScore && highScore !== 0) {
+        user.playerData[playerDataIndex].highScore = highScore;
+        if (user.maxLevel <= 5) {
+          user.playerData[playerDataIndex+1].unlocked = unlocked;
+        }
+      }
+    } 
+    // Save the updated user
+    const updatedUser = await user.save();
+    return updatedUser;
       }
       throw AuthenticationError;
     },

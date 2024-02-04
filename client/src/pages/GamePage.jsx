@@ -4,6 +4,10 @@ import Phaser from "phaser";
 import { Button } from 'antd';
 import GameScene from "../components/Scenes/GameScene"
 import InGameUI from "../components/UserInterface/InGameUI";
+import Auth from "../utils/auth";
+import { SAVE_SCORE } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
+
 
 const GameComp = () => {
   const {level} = useParams();
@@ -12,6 +16,8 @@ const GameComp = () => {
   const [pauseButton, setPauseButton] = useState(false);
   const [gameOverState, setGameOverState] = useState(false);
   const gameRef = useRef(null);
+  const [saveScore, {error, data}] = useMutation(SAVE_SCORE);
+  
 
   const config = {
     type: Phaser.AUTO,
@@ -62,7 +68,10 @@ const GameComp = () => {
   const navigate = useNavigate();
   const handlePauseButton = () => setPauseButton((prevButton) => !prevButton);
   const handleRetryButton = () => window.location.reload() ;
-  const handleExitGame = () => navigate('/gamelevels');
+  const handleExitGame = () => {
+    handleSaveScore();
+    navigate('/gamelevels')
+  };
 
   useEffect(() => {
     const game = gameRef.current;
@@ -74,6 +83,31 @@ const GameComp = () => {
       }
     }
   }, [pauseButton]);
+  
+  const handleSaveScore = async () => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    const gameData = {
+      maxLevel: parseInt(level) + 1,
+      level: parseInt(level),
+      highScore: score,
+      unlocked: true,
+    }
+
+    if (!token) {
+      navigate('/')
+    }
+    try {
+      await saveScore({
+        variables: {...gameData},
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+  }
+  // if  (gameOverState)  {
+  //   handleSaveScore()
+  // }
 
 
 

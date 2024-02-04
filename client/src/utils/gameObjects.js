@@ -63,7 +63,7 @@ export const hazardSprite = [
     image: spikedBall,
     frameWidth: 56,
     frameHeight: 56,
-    scale: 2,
+    scale: 1.5,
     delay: 1000,
     
   },
@@ -72,7 +72,7 @@ export const hazardSprite = [
     image: spikedBall,
     frameWidth: 56,
     frameHeight: 56,
-    scale: 3,
+    scale: 2,
     delay: 1500,
     
   },

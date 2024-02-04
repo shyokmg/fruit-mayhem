@@ -23,3 +23,17 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const SAVE_SCORE = gql`
+  mutation saveScore($maxLevel: Int!, $level: Int!, $highScore: Int!, $unlocked: Boolean) {
+    saveScore(maxLevel: $maxLevel, level: $level, highScore: $highScore, unlocked: $unlocked) {
+        _id
+        username
+        maxLevel
+        playerData {
+          level
+          highScore
+        }
+    }
+  }
+`;
