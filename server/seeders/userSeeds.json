@@ -12,17 +12,17 @@
       {
         "level": 2,
         "highScore": 0,
-        "unlocked": false
+        "unlocked": true
       },
       {
         "level": 3,
         "highScore": 0,
-        "unlocked": false
+        "unlocked": true
       },
       {
         "level": 4,
         "highScore": 0,
-        "unlocked": false
+        "unlocked": true
       },
       {
         "level": 5,

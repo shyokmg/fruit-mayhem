@@ -18,7 +18,7 @@ const GameComp = () => {
     parent: "phaser-container",
     width: 1024,
     height: 576,
-    scene: [GameScene],
+    scene: [new GameScene(level)],
     physics: {
       default: "arcade",
       arcade: {
@@ -32,6 +32,8 @@ const GameComp = () => {
   useEffect(() => {
     const game = new Phaser.Game(config);
     gameRef.current = game;
+    game.events.emit('currentLevel', level);
+
 
     game.events.on('storedScore', (data) => {
       setScore(data);
@@ -39,6 +41,10 @@ const GameComp = () => {
 
     game.events.on('storeRemainingTime', (data) => {
       setTime(data);
+    });
+
+    game.events.on('storedFruitState', (data) => {
+      console.log(`These are ${data}`)
     });
 
     game.events.on('gameOver', (data) => {
@@ -56,7 +62,7 @@ const GameComp = () => {
   const navigate = useNavigate();
   const handlePauseButton = () => setPauseButton((prevButton) => !prevButton);
   const handleRetryButton = () => window.location.reload() ;
-  const handleExitGame = () => navigate('/');
+  const handleExitGame = () => navigate('/gamelevels');
 
   useEffect(() => {
     const game = gameRef.current;
@@ -72,7 +78,6 @@ const GameComp = () => {
 
 
   return (
-
     <InGameUI 
       level ={level}
       score={score}
@@ -83,27 +88,6 @@ const GameComp = () => {
       handleRetryButton={handleRetryButton}
       handleExitGame={handleExitGame}
     />
-    // <div style={{ position: 'relative' }}>
-    //   <div id="phaser-container">
-    //   <div style={{ position: 'relative' }}>
-    //     <h1 style={{ position: 'absolute', top: '0px', left: '480px', zIndex: 1 }}>Level: {level} </h1>
-    //     <h1 style={{ position: 'absolute', top: '0px', left: '850px', zIndex: 1 }}>Score: {score} </h1>
-    //     <h1 style={{ position: 'absolute', top: '0px', left: '50px', zIndex: 1 }}>Time: {time} </h1>
-    //     {gameOverState ? (
-    //     <>
-    //     <Button onClick={handleRetryButton} style={{ position: 'absolute', top: '200px', left: '480px', zIndex: 1 }}>Retry</Button>
-    //     <Button onClick={handleExitGame} style={{ position: 'absolute', top: '300px', left: '480px', zIndex: 1 }}>Exit </Button>
-    //     </>
-    //     )
-    //     : (
-    //     <Button onClick={handlePauseButton} style={{ position: 'absolute', top: '0px', left: '930px', zIndex: 1 }} >
-    //       {pauseButton ? 'Resume' : 'Pause'}
-    //     </Button>
-
-    //     )}
-    //   </div>
-    // </div>
-    // </div>
   );
 };
 
