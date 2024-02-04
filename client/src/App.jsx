@@ -42,9 +42,9 @@ function App() {
 
     <ApolloProvider client={client}>
       <Flex gap="middle" wrap="wrap">
-        <Layout
+        <Layout className="main-background"
           style={{
-            background: "black",
+            
             width: 1024,
             height: 576,
           }}

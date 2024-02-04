@@ -8,6 +8,18 @@ body {
     /* height: 100vh; */
 }
 
+.custom-button {
+  font-size: 30px;
+  padding: 10px 20px;
+  color: black;
+}
+
+.main-background {
+  background-image: url('./assets/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 /* h1,
 h2,
 h3,

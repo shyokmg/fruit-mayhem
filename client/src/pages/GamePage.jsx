@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef  } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import Phaser from "phaser";
-import { Button } from 'antd';
 import GameScene from "../components/Scenes/GameScene"
 import InGameUI from "../components/UserInterface/InGameUI";
 import Auth from "../utils/auth";
@@ -105,11 +104,6 @@ const GameComp = () => {
     }
 
   }
-  // if  (gameOverState)  {
-  //   handleSaveScore()
-  // }
-
-
 
   return (
     <InGameUI 
