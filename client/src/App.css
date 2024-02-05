@@ -4,7 +4,7 @@ body {
   /* font-family: 'Rubik', sans-serif; */
   font-family: 'Press Start 2P', system-ui;
   margin: 0;
-    background-color: black;
+    background-color: #073b4c;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,6 +40,14 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.game-header {
+  background-color: #118AB2;
+}
+
+.game-footer {
+  background-color: #06D6A0;
 }
 /* h1,
 h2,

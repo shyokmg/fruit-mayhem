@@ -41,7 +41,9 @@ function App() {
     //  create an Apollo Provider to make every request work with the Apollo Server.
 
     <ApolloProvider client={client}>
-      <Flex gap="middle" wrap="wrap">
+      <div >
+        <HeaderComp/>
+
         <Layout className="main-background"
           style={{
             
@@ -49,11 +51,12 @@ function App() {
             height: 576,
           }}
         >
-          <HeaderComp />
           <Outlet />
-      <FooterComp />
         </Layout>
-      </Flex>
+      <FooterComp/>
+
+      </div>
+
     </ApolloProvider>
   );
 }

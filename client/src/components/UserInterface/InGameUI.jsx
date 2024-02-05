@@ -12,15 +12,15 @@ const InGameUI = (props) => {
     <div style={{ position: 'relative' }}>
       <div id="phaser-container">
       <div className="ingame-text" style={{ position: 'relative' }}>
-        <h1 style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1 }}>Time: {props.time} </h1>
-        <h1 style={{ position: 'absolute', top: '0px', left: '400px', zIndex: 1 }}>Level {props.level} </h1>
-        <h1 style={{ position: 'absolute', top: '0px', left: '640px', zIndex: 1 }}>Score: {props.score} </h1>
+        <h1 style={{ position: 'absolute', top: '0px', left: '20px', zIndex: 1 }}>TIME:{props.time} </h1>
+        <h1 style={{ position: 'absolute', top: '0px', left: '400px', zIndex: 1 }}>LEVEL {props.level} </h1>
+        <h1 style={{ position: 'absolute', top: '0px', left: '700px', zIndex: 1 }}>SCORE:{props.score} </h1>
         {props.gameOverState ? (
         <>
-        <h1 style={{ position: 'absolute', top: '130px', left: '450px', zIndex: 1 }}>Game Over</h1>
-        <h1 style={{ position: 'absolute', top: '180px', left: '425px', zIndex: 1 }}>Final Score: {props.score}</h1>
-        <Button onClick={props.handleRetryButton} className="gameover-button" type="link" style={{ position: 'absolute', top: '240px', left: '420px', zIndex: 1 }}><MdOutlineReplayCircleFilled /></Button>
-        <Button onClick={props.handleExitGame} className="gameover-button" type="link" style={{ position: 'absolute', top: '240px', left: '560px', zIndex: 1 }}><BiSolidExit /> </Button>
+        <h1 style={{ position: 'absolute', top: '130px', left: '380px', zIndex: 1 }}>GAME OVER</h1>
+        <h1 style={{ position: 'absolute', top: '180px', left: '320px', zIndex: 1 }}>FINAL SCORE:{props.score}</h1>
+        <Button onClick={props.handleRetryButton} className="ingame-button" type="link" style={{ position: 'absolute', top: '250px', left: '410px', zIndex: 1 }}>REPLAY<MdOutlineReplayCircleFilled /></Button>
+        <Button onClick={props.handleExitGame} className="ingame-button" type="link" style={{ position: 'absolute', top: '300px', left: '430px', zIndex: 1 }}>EXIT<BiSolidExit /> </Button>
         </>
         )
         : (

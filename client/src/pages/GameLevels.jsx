@@ -27,13 +27,14 @@ const GameLevels = () => {
   }
 
   return (
-    <div style={{ margin: "100px" }}>
+    <div style={{ margin: "160px" }}>
       <Flex justify="center" align="center" gap="middle" vertical>
-        <Button onClick={handleBackButton} className="gameover-button" type="link" style={{ position: 'absolute', top: '70px', left: '230px', zIndex: 1 }}><IoArrowBackCircleSharp /></Button>
+        <Button onClick={handleBackButton} className="ingame-button" type="link" style={{ position: 'absolute', top: '85px', left: '220px', zIndex: 1 }}> BACK</Button>
+        <h1 className="ingame-text"  style={{ position: 'absolute', top: '85px', left: '620px', zIndex: 1 }}> LEVELS </h1>
         <Row gutter={[16, 32]}>
           {userData.map((levels) => (
             <Col span={8}>
-              <LevelCards
+              <LevelCards 
                 key={levels.level}
                 level={levels.level}
                 highscore={levels.highScore}

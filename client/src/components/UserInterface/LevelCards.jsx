@@ -2,13 +2,23 @@ import React, { useState } from 'react';
 import { Card } from 'antd';
 const { Meta } = Card;
 import { useNavigate } from 'react-router-dom';
+import { FaLock, FaLockOpen } from "react-icons/fa";
+
 
 const LevelCards = ({level, highscore, isUnlocked}) => {
 
-    const gridStyle = {
-        // width: '70%',
+    const gridStyle1 = {
+        width: '90%',
+        height: '100%',
         textAlign: 'center'
     };
+
+    const gridStyle2 = {
+      width: '90%',
+      height: '100%',
+      textAlign: 'center',
+      backgroundColor: '#444140'
+  };
     const navigate = useNavigate();
     const handleCardClick = () => {
       if (isUnlocked) {
@@ -20,16 +30,27 @@ const LevelCards = ({level, highscore, isUnlocked}) => {
  
   return (
     <Card.Grid>
-
-<Card
-    hoverable={isUnlocked}
-    style={gridStyle}
+{isUnlocked ? (
+<Card 
+    hoverable={true}
+    style={gridStyle1}
     onClick={handleCardClick}
-    // cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
   >
-    <Meta title={`Level: ${level}`} description={`Highscore: ${highscore}`} />
+    <Meta  className="ingame-text" title={`Level:${level}`} description={`Highscore: ${highscore}`} />
+    <FaLockOpen/>
   </Card>
-    </Card.Grid>
+
+) : (
+  <Card 
+    hoverable={false}
+    style={gridStyle2}
+    onClick={handleCardClick}
+  >
+    <Meta  className="ingame-text" title={`Level: ${level}`} description={`Highscore: ${highscore}`} />
+    <FaLock/>
+  </Card>
+)}
+</Card.Grid>
   );
 };
 

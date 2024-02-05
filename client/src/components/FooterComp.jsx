@@ -4,8 +4,8 @@ const { Header, Content, Footer } = Layout;
 
 const FooterComp = () => {
     return (
-       <Footer>
-        <h1>FOOTER</h1>
+       <Footer className="game-footer">
+        <h1 className="ingame-text" >FOOTER</h1>
        </Footer>
     );
 }
