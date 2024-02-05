@@ -40,9 +40,12 @@ const LoginForm = () => {
     return !username || !password;
   };
 
+
+  
+
   return (
     <>
-      <Form form={form} onFinish={handleFormSubmit}>
+      <Form form={form} onFinish={handleFormSubmit} >
         {showAlert && (
           <Alert
             closable
@@ -59,7 +62,7 @@ const LoginForm = () => {
           validateTrigger="onBlur"
           rules={[{ required: true, message: 'Username is required!' }]}
         >
-          <Input
+          <Input 
             type='text'
             placeholder='Your username'
             name='username'

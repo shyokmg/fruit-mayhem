@@ -14,7 +14,7 @@ const MainMenu = () => {
 <Flex justify="center" align="center" gap="middle" vertical>
 
 <Button onClick={handleStartGame} className="main-button" type="link">PLAY<FaPlayCircle/></Button>
-<Button className="main-button" type="link">OPTIONS</Button>
+<Button className="main-button" type="link">HIGHSCORES</Button>
 <Button onClick={Auth.logout} className="main-button" type="link">LOGOUT</Button>
 </Flex>
 

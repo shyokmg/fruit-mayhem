@@ -30,11 +30,12 @@ const tabList = [
  
   return (
     <>
-      <Card
+      <Card 
         style={{
           width: '35%',
-          margin: '100px'
+          margin: '100px',
         }}
+        
         
         tabList={tabList}
         activeTabKey={activeTabKey1}

@@ -14,7 +14,7 @@ const InGameUI = (props) => {
       <div className="ingame-text" style={{ position: 'relative' }}>
         <h1 style={{ position: 'absolute', top: '0px', left: '20px', zIndex: 1 }}>TIME:{props.time} </h1>
         <h1 style={{ position: 'absolute', top: '0px', left: '400px', zIndex: 1 }}>LEVEL {props.level} </h1>
-        <h1 style={{ position: 'absolute', top: '0px', left: '700px', zIndex: 1 }}>SCORE:{props.score} </h1>
+        <h1 style={{ position: 'absolute', top: '0px', left: '760px', zIndex: 1 }}>SCORE:{props.score} </h1>
         {props.gameOverState ? (
         <>
         <h1 style={{ position: 'absolute', top: '130px', left: '380px', zIndex: 1 }}>GAME OVER</h1>
@@ -32,10 +32,8 @@ const InGameUI = (props) => {
               <Button onClick={props.handleExitGame} className="ingame-button" type="link" style={{ position: 'absolute', top: '250px', left: '430px', zIndex: 1 }} >EXIT <BiSolidExit/></Button>
             </>
 
-          ) : <Button onClick={props.handlePauseButton} className="ingame-button" type="link" style={{ position: 'absolute', top: '0px', left: '950px', zIndex: 1 }} ><FaPause/></Button>}
-        {/* <Button onClick={props.handlePauseButton} className="ingame-button" type="link" style={{ position: 'absolute', top: '0px', left: '950px', zIndex: 1 }} >
-          {props.pauseButton ? <FaPlay/> : <FaPause/>}
-        </Button> */}
+          ) : <Button onClick={props.handlePauseButton} className="ingame-button" type="link" style={{ position: 'absolute', top: '-65px', left: '800px', zIndex: 1 }} >PAUSE<FaPause/></Button>}
+
           </>
 
         )}

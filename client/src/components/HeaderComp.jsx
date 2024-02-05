@@ -4,7 +4,7 @@ const { Header, Content, Footer } = Layout;
 
 const HeaderComp = () => {
     const headerStyle = {
-        display: 'flex∂',
+        display: 'flex',
         alignItems: 'center',
         color: '#fff',
         // padding: '40px'
@@ -12,7 +12,7 @@ const HeaderComp = () => {
 
     return (
         <Header className="game-header" style={headerStyle}>
-            <h1 className="ingame-text" >FRUIT MAYHEM</h1>
+            <h1 className="ingame-text" style={{ padding: '294px'}}>FRUIT MAYHEM</h1>
         </Header>
     );
 }
