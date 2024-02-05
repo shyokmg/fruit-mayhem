@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Flex, Card, Row, Col, Button } from "antd";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 import LevelCards from "../components/UserInterface/LevelCards";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -28,7 +29,7 @@ const GameLevels = () => {
   return (
     <div style={{ margin: "100px" }}>
       <Flex justify="center" align="center" gap="middle" vertical>
-        <Button onClick={handleBackButton}>Back</Button>
+        <Button onClick={handleBackButton} className="gameover-button" type="link" style={{ position: 'absolute', top: '70px', left: '230px', zIndex: 1 }}><IoArrowBackCircleSharp /></Button>
         <Row gutter={[16, 32]}>
           {userData.map((levels) => (
             <Col span={8}>
