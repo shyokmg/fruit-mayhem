@@ -28,7 +28,7 @@ const GameComp = () => {
       default: "arcade",
       arcade: {
         gravity: { y: 200 },
-        debug: true,
+        // debug: true,
       },
     },
   };

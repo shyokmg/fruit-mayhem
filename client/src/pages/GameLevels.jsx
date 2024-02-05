@@ -27,10 +27,12 @@ const GameLevels = () => {
   }
 
   return (
-    <div style={{ margin: "160px" }}>
+    <div style={{position: 'relative'}}>
+
+        <Button onClick={handleBackButton} className="ingame-button" type="link" style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 1 }}> BACK</Button>
+        <h1 className="ingame-text"  style={{ position: 'absolute', top: '10px', left: '300px', zIndex: 1 }}> CHOOSE A LEVEL </h1>
+    <div style={{ margin: "160px"}}>
       <Flex justify="center" align="center" gap="middle" vertical>
-        <Button onClick={handleBackButton} className="ingame-button" type="link" style={{ position: 'absolute', top: '85px', left: '220px', zIndex: 1 }}> BACK</Button>
-        <h1 className="ingame-text"  style={{ position: 'absolute', top: '85px', left: '520px', zIndex: 1 }}> CHOOSE A LEVEL </h1>
         <Row gutter={[16, 32]}>
           {userData.map((levels) => (
             <Col span={8}>
@@ -44,6 +46,7 @@ const GameLevels = () => {
           ))}
         </Row>
       </Flex>
+    </div>
     </div>
   );
 };

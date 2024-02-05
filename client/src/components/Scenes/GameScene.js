@@ -75,7 +75,7 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(0, 0, "background").setOrigin(0, 0);
     const ground = this.physics.add.staticGroup();
     ground.create(0, 496, "ground").setOrigin(0, 0).refreshBody();
-    this.player = this.physics.add.sprite(100, 250, "playerIdle");
+    this.player = this.physics.add.sprite(500, 400, "playerIdle");
     
     this.fruitTarget = this.physics.add
       .sprite(this.getRandomX(), 0, this.getRandomObject(fruitSprite).name)

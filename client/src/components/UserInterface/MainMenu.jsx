@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Button, Flex } from 'antd';
 import Auth from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
-import { FaPause, FaPlayCircle } from "react-icons/fa";
+import { FaPlayCircle } from "react-icons/fa";
+import { SiGamebanana } from "react-icons/si";
 // const { Meta } = Card;
 
 const MainMenu = () => {
@@ -10,16 +11,18 @@ const MainMenu = () => {
     const handleStartGame = () => { navigate('/gamelevels') };
  
   return (
+    <div>
+
+<h1 className="game-title">FRUIT MAYHEM<SiGamebanana/></h1>
     <div style={{ margin: "73px" }}>
 <Flex justify="center" align="center" gap="middle" vertical>
 
 <Button onClick={handleStartGame} className="main-button" type="link">PLAY<FaPlayCircle/></Button>
-<Button className="main-button" type="link">HIGHSCORES</Button>
+{/* <Button className="main-button" type="link">HIGHSCORES</Button> */}
 <Button onClick={Auth.logout} className="main-button" type="link">LOGOUT</Button>
 </Flex>
-
-
 </div>
+    </div>
 
   );
 };

@@ -1,4 +1,4 @@
-const { User, Level } = require("../models");
+const { User } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const defaultLevels = require("../utils/defaultLevels.json");
 
@@ -13,9 +13,6 @@ const resolvers = {
       throw AuthenticationError;
     },
 
-    getLevel: async (parent, { level }) => {
-      return Level.findOne({ level });
-    },
   },
 
   Mutation: {

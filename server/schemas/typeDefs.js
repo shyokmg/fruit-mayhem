@@ -21,11 +21,6 @@ input PlayerDataInput {
     unlocked: Boolean
 }
 
-type Level {
-    level: Int
-    numberOfObjects: [NumberOfObject]
-}
-
 type NumberOfObject {
     fruits: Int
     powerUps: Int
@@ -39,7 +34,7 @@ type Auth {
 
 type Query {
     me: User
-    getLevel(level: Int): Level
+
 } 
 
 type Mutation {
