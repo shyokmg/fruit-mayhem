@@ -75,7 +75,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(0, 0, "background").setOrigin(0, 0);
+    // this.add.image(0, 0, "background").setOrigin(0, 0);
+    this.time.addEvent({ delay: 1000, callback: this.loadImage.bind(this), loop: false });
+    
     const ground = this.physics.add.staticGroup();
     ground.create(0, 496, "ground").setOrigin(0, 0).refreshBody();
     this.player = this.physics.add.sprite(500, 400, "playerIdle");
@@ -144,6 +146,10 @@ export default class GameScene extends Phaser.Scene {
     this.timedEvent  = this.time.delayedCall(30000, this.gameOver, [], this)
     this.hitTimedEvent = new Phaser.Time.TimerEvent({ delay: hazardState.delay })
 
+  }
+
+  loadImage() {
+    this.add.image(0, 0, "background").setOrigin(0, 0);
   }
 
   update() {
