@@ -43,9 +43,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    
-    this.load.image("background", background);
-    this.load.image("ground", ground);
+    this.load.image("background", '/src/assets/background.png');
+    this.load.image("ground", '/src/assets/ground.png');
     console.log(this.level)
     playerSprite.map((sprite) => {
       this.load.spritesheet(sprite.name, sprite.image, {

@@ -1,49 +1,61 @@
-import cherries from "../assets/fruits/cherries.png";
-import apples from "../assets/fruits/apples.png";
-import bananas from "../assets/fruits/bananas.png";
-import pineapples from "../assets/fruits/pineapples.png";
-import melons from "../assets/fruits/melons.png";
-import spikedBall from "../assets/hazards/spikedBall.png"
-import playerIdle from "../assets/player/playerIdleRight.png";
-import playerRunRight from "../assets/player/playerRunRight.png";
-import playerRunLeft from "../assets/player/playerRunLeft.png";
-import playerHit from "../assets/player/playerHit.png";
+// import cherries from "../assets/fruits/cherries.png";
+// import apples from "../assets/fruits/apples.png";
+// import bananas from "../assets/fruits/bananas.png";
+// import pineapples from "../assets/fruits/pineapples.png";
+// import melons from "../assets/fruits/melons.png";
+// import spikedBall from "../assets/hazards/spikedBall.png"
+// import playerIdle from "../assets/player/playerIdleRight.png";
+// import playerRunRight from "../assets/player/playerRunRight.png";
+// import playerRunLeft from "../assets/player/playerRunLeft.png";
+// import playerHit from "../assets/player/playerHit.png";
 
-export const levelSpeed = [1, 1.2, 1.5, 2, 2.5]
+const cherries = "/src/assets/fruits/cherries.png";
+const apples = "/src/assets/fruits/apples.png";
+const bananas = "/src/assets/fruits/bananas.png";
+const pineapples = "/src/assets/fruits/pineapples.png";
+const melons = "/src/assets/fruits/melons.png";
+const spikedBall = "/src/assets/hazards/spikedBall.png"
+const playerIdle = "/src/assets/player/playerIdleRight.png";
+const playerRunRight = "/src/assets/player/playerRunRight.png";
+const playerRunLeft = "/src/assets/player/playerRunLeft.png";
+const playerHit = "/src/assets/player/playerHit.png";
+
+
+export const levelSpeed = [1, 1.2, 1.4, ]
 
 export const fruitSprite = [
   {
     name: "cherries",
     image: cherries,
-    points: 20,
+    points: 2,
     scale: 1,
     
   },
   {
     name: "apples",
     image: apples,
-    points: 15,
-    scale: 1.5,
+    points: 5,
+    scale: 2,
   },
   {
     name: "bananas",
     image: bananas,
     points: 10,
-    scale: 1.8,
+    scale: 2,
     
   },
   {
     name: "pineapples",
     image: pineapples,
-    points: 5,
-    scale: 2,
+    points: 15,
+    scale: 3,
     
   },
   {
     name: "melons",
     image: melons,
-    points: 1,
-    scale: 2.5,
+    points: 20,
+    scale: 3,
     
   },
 ];
@@ -63,7 +75,7 @@ export const hazardSprite = [
     image: spikedBall,
     frameWidth: 56,
     frameHeight: 56,
-    scale: 1.5,
+    scale: 2,
     delay: 1000,
     
   },
@@ -72,8 +84,8 @@ export const hazardSprite = [
     image: spikedBall,
     frameWidth: 56,
     frameHeight: 56,
-    scale: 2,
-    delay: 1500,
+    scale: 3,
+    delay: 2000,
     
   },
 ];
