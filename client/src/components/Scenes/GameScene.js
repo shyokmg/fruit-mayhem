@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 // import background from "../../assets/background.png";
 // import ground from "../../assets/ground.png";
-import { levelSpeed, fruitSprite, playerSprite, hazardSprite } from "../../utils/gameObjects"
-import { background, ground } from "../../assets/base64-images";
+import { levelSpeed, fruitSprite, playerSprite, hazardSprite} from "../../utils/gameObjects"
+
 
 const speedDown = 200;
 let fruitState = {
@@ -45,11 +45,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    // this.load.image("background", '/src/assets/background.png');
-    // this.load.image("ground", '/src/assets/ground.png');
-    this.textures.addBase64('background', background);
-    this.textures.addBase64('ground', ground);
-    
+    this.load.image("background", '/src/assets/background.png');
+    this.load.image("ground", '/src/assets/ground.png');
+    console.log(this.level)
     playerSprite.map((sprite) => {
       this.load.spritesheet(sprite.name, sprite.image, {
         frameWidth: sprite.frameWidth,
@@ -75,9 +73,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    // this.add.image(0, 0, "background").setOrigin(0, 0);
-    this.time.addEvent({ delay: 1000, callback: this.loadImage.bind(this), loop: false });
-    
+    this.add.image(0, 0, "background").setOrigin(0, 0);
     const ground = this.physics.add.staticGroup();
     ground.create(0, 496, "ground").setOrigin(0, 0).refreshBody();
     this.player = this.physics.add.sprite(500, 400, "playerIdle");
@@ -146,10 +142,6 @@ export default class GameScene extends Phaser.Scene {
     this.timedEvent  = this.time.delayedCall(30000, this.gameOver, [], this)
     this.hitTimedEvent = new Phaser.Time.TimerEvent({ delay: hazardState.delay })
 
-  }
-
-  loadImage() {
-    this.add.image(0, 0, "background").setOrigin(0, 0);
   }
 
   update() {

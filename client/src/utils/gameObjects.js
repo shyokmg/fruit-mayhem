@@ -15,13 +15,13 @@ const bananas = "/src/assets/fruits/bananas.png";
 const pineapples = "/src/assets/fruits/pineapples.png";
 const melons = "/src/assets/fruits/melons.png";
 const spikedBall = "/src/assets/hazards/spikedBall.png"
-const playerIdle = "/src/assets/player/playerIdleRight.png";
+const playerIdleRight = "/src/assets/player/playerIdleRight.png";
 const playerRunRight = "/src/assets/player/playerRunRight.png";
 const playerRunLeft = "/src/assets/player/playerRunLeft.png";
 const playerHit = "/src/assets/player/playerHit.png";
 
 
-export const levelSpeed = [1, 1.2, 1.4, ]
+export const levelSpeed = [1, 1.2, 1.4, 1.5, 2.0]
 
 export const fruitSprite = [
   {
@@ -95,7 +95,7 @@ export const playerSprite = [
   {
     name: "playerIdle",
     key: "idle",
-    image: playerIdle,
+    image: playerIdleRight,
     frameWidth: 96,
     frameHeight: 96,
     endFrame: 21,
