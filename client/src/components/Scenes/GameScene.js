@@ -1,8 +1,8 @@
 import Phaser from "phaser";
-import background from "../../assets/background.png";
-import ground from "../../assets/ground.png";
-import { levelSpeed, fruitSprite, playerSprite, hazardSprite} from "../../utils/gameObjects"
-
+// import background from "../../assets/background.png";
+// import ground from "../../assets/ground.png";
+import { levelSpeed, fruitSprite, playerSprite, hazardSprite } from "../../utils/gameObjects"
+import { background, ground } from "../../assets/base64-images";
 
 const speedDown = 200;
 let fruitState = {
@@ -22,6 +22,8 @@ let hazardState = {
 };
 
 let isPlayerHit = false;
+
+
 
 export default class GameScene extends Phaser.Scene {
   
@@ -43,9 +45,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", '/src/assets/background.png');
-    this.load.image("ground", '/src/assets/ground.png');
-    console.log(this.level)
+    // this.load.image("background", '/src/assets/background.png');
+    // this.load.image("ground", '/src/assets/ground.png');
+    this.textures.addBase64('background', background);
+    this.textures.addBase64('ground', ground);
+    
     playerSprite.map((sprite) => {
       this.load.spritesheet(sprite.name, sprite.image, {
         frameWidth: sprite.frameWidth,
