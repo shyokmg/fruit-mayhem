@@ -3,93 +3,130 @@
 // import bananas from "../assets/fruits/bananas.png";
 // import pineapples from "../assets/fruits/pineapples.png";
 // import melons from "../assets/fruits/melons.png";
-// import spikedBall from "../assets/hazards/spikedBall.png"
-// import playerIdle from "../assets/player/playerIdleRight.png";
+// import spikedBall from "../assets/hazards/spikedBall.png";
+// import playerIdleRight from "../assets/player/playerIdleRight.png";
 // import playerRunRight from "../assets/player/playerRunRight.png";
 // import playerRunLeft from "../assets/player/playerRunLeft.png";
 // import playerHit from "../assets/player/playerHit.png";
 
-const cherries = "/src/assets/fruits/cherries.png";
-const apples = "/src/assets/fruits/apples.png";
-const bananas = "/src/assets/fruits/bananas.png";
-const pineapples = "/src/assets/fruits/pineapples.png";
-const melons = "/src/assets/fruits/melons.png";
-const spikedBall = "/src/assets/hazards/spikedBall.png"
-const playerIdleRight = "/src/assets/player/playerIdleRight.png";
-const playerRunRight = "/src/assets/player/playerRunRight.png";
-const playerRunLeft = "/src/assets/player/playerRunLeft.png";
-const playerHit = "/src/assets/player/playerHit.png";
+// const cherries = "/src/assets/fruits/cherries.png";
+// const apples = "/src/assets/fruits/apples.png";
+// const bananas = "/src/assets/fruits/bananas.png";
+// const pineapples = "/src/assets/fruits/pineapples.png";
+// const melons = "/src/assets/fruits/melons.png";
+// const spikedBall = "/src/assets/hazards/spikedBall.png"
+// const playerIdleRight = "/src/assets/player/playerIdleRight.png";
+// const playerRunRight = "/src/assets/player/playerRunRight.png";
+// const playerRunLeft = "/src/assets/player/playerRunLeft.png";
+// const playerHit = "/src/assets/player/playerHit.png";
 
+import {
+  playerHit,
+  playerIdleRight,
+  playerRunLeft,
+  playerRunRight,
+  cherries,
+  apples,
+  bananas,
+  pineapples,
+  melons,
+  spikedBall
+} from "../assets/base64-images.js";
 
-export const levelSpeed = [1, 1.2, 1.4, 1.5, 2.0]
+export const levelSpeed = [1, 1.2, 1.4, 1.5, 2.0];
 
 export const fruitSprite = [
   {
     name: "cherries",
+    key: "cherries",
     image: cherries,
     points: 2,
-    scale: 1,
-    
+    scale: 1.5,
+    frameWidth: 32,
+    frameHeight: 32,
+    endFrame: 16,
+    frameRate: 32,
+    repeat: -1,
   },
   {
     name: "apples",
+    key: "apples",
     image: apples,
     points: 5,
     scale: 2,
+    frameWidth: 32,
+    frameHeight: 32,
+    endFrame: 16,
+    frameRate: 32,
+    repeat: -1,
   },
   {
     name: "bananas",
+    key: "bananas",
     image: bananas,
     points: 10,
     scale: 2,
-    
+    frameWidth: 32,
+    frameHeight: 32,
+    endFrame: 16,
+    frameRate: 32,
+    repeat: -1,
   },
   {
     name: "pineapples",
+    key: "pineapples",
     image: pineapples,
     points: 15,
     scale: 3,
-    
+    frameWidth: 32,
+    frameHeight: 32,
+    endFrame: 16,
+    frameRate: 32,
+    repeat: -1,
   },
   {
     name: "melons",
+    key: "melons",
     image: melons,
     points: 20,
     scale: 3,
-    
+    frameWidth: 32,
+    frameHeight: 32,
+    endFrame: 16,
+    frameRate: 32,
+    repeat: -1,
   },
 ];
 
 export const hazardSprite = [
   {
     name: "spikedBall",
+    key: "spikedBall",
     image: spikedBall,
     frameWidth: 56,
     frameHeight: 56,
     scale: 1,
     delay: 500,
-    
   },
   {
     name: "spikedBall2",
+    key: "spikedBall2",
     image: spikedBall,
     frameWidth: 56,
     frameHeight: 56,
     scale: 2,
     delay: 1000,
-    
   },
   {
     name: "spikedBall3",
+    key: "spikedBall3",
     image: spikedBall,
     frameWidth: 56,
     frameHeight: 56,
     scale: 3,
     delay: 2000,
-    
   },
 ];
-
 
 export const playerSprite = [
   {
@@ -132,4 +169,4 @@ export const playerSprite = [
     frameRate: 7,
     repeat: 3,
   },
-]
+];

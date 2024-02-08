@@ -39,17 +39,13 @@ const GameComp = () => {
     gameRef.current = game;
     game.events.emit('currentLevel', level);
 
-
+    // console.log(game)
     game.events.on('storedScore', (data) => {
       setScore(data);
     });
 
     game.events.on('storeRemainingTime', (data) => {
       setTime(data);
-    });
-
-    game.events.on('storedFruitState', (data) => {
-      console.log(`These are ${data}`)
     });
 
     game.events.on('gameOver', (data) => {
