@@ -8,6 +8,7 @@ import MainMenu from "../components/UserInterface/MainMenu";
 const Home = () => {
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
+  // render main menu or login
   return (
     <main>
         <Content>

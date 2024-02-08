@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { Flex, Layout, Button, theme } from "antd";
-const { Header, Content, Footer } = Layout;
+import { Layout } from "antd";
+const { Header } = Layout;
 
+// component for header
 const HeaderComp = () => {
     const headerStyle = {
         display: 'flex',
         alignItems: 'center',
         color: '#fff',
-        // padding: '40px'
       };
 
     return (

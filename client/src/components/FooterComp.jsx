@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Flex, Layout, Button, theme } from "antd";
-const { Header, Content, Footer } = Layout;
+
+import { Layout } from "antd";
+const { Footer } = Layout;
 
 const FooterComp = () => {
     return (

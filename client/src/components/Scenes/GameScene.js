@@ -1,7 +1,5 @@
 import Phaser from "phaser";
-// import background from "../../assets/background.png";
-// import ground from "../../assets/ground.png";
-import { background, ground } from "../../assets/base64-images.js"
+import { background, ground } from "../../assets/base64-images.js";
 
 import {
   levelSpeed,
@@ -11,6 +9,8 @@ import {
 } from "../../utils/gameObjects";
 
 const speedDown = 200;
+
+// Initialize fruit properties
 let fruitState = {
   name: fruitSprite[0].name,
   image: fruitSprite[0].image,
@@ -18,6 +18,7 @@ let fruitState = {
   scale: fruitSprite[0].scale,
 };
 
+// Initialize hazard properties
 let hazardState = {
   name: hazardSprite[0].name,
   image: hazardSprite[0].image,
@@ -27,10 +28,10 @@ let hazardState = {
   scale: hazardSprite[0].scale,
 };
 
+// Initialize player hit detection
 let isPlayerHit = false;
-const nAssets = 14;
-let nLoaded = 0;
 
+// Main scene class
 export default class GameScene extends Phaser.Scene {
   constructor(level) {
     super({ key: "GameScene" });
@@ -49,143 +50,244 @@ export default class GameScene extends Phaser.Scene {
     this.remainingTime;
   }
 
+  // Initalizes game 
   preload() {
+    // Store gameover boolean to events
     this.game.events.emit("gameOver", false);
+
+    // Initialize assets
     this.textures.addBase64("background", background);
-    this.textures.addBase64('ground', ground)
+    this.textures.addBase64("ground", ground);
 
-    playerSprite.map((sprite) => { this.createSprite(sprite)});
-    fruitSprite.map((sprite) => { this.createSprite(sprite)});
-    hazardSprite.map((sprite) => { this.createSprite(sprite)});
-
-
-    window.scene = this;
+    playerSprite.map((sprite) => {
+      this.createSprite(sprite);
+    });
+    fruitSprite.map((sprite) => {
+      this.createSprite(sprite);
+    });
+    hazardSprite.map((sprite) => {
+      this.createSprite(sprite);
+    });
   }
 
-
-
   create() {
+    // function for key inputs
     this.cursor = this.input.keyboard.createCursorKeys();
-    this.game.events.emit('storedScore', this.points);
-    this.time.addEvent({ delay: 1000, callback: this.loadAsset.bind(this), loop: false});
-    this.game.events.on('currentLevel', (data) => {
-      this.level = data
+
+    // Store the points into events
+    this.game.events.emit("storedScore", this.points);
+    // Timer for loading assets 
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.loadAsset.bind(this),
+      loop: false,
     });
+
+    // Get current level from events
+    this.game.events.on("currentLevel", (data) => {
+      this.level = data;
+    });
+
+    // Initialize the hit time event for player hit by hazards and add a delay for animation
+    this.hitTimedEvent = new Phaser.Time.TimerEvent({ delay: hazardState.delay })
+  }
+
+  // method to create animation frames
+  createAnimSprite(sprite) {
+    this.anims.create({
+      key: sprite.key,
+      frames: this.anims.generateFrameNumbers(sprite.name, {
+        start: 0,
+        end: sprite.endFrame,
+      }),
+      frameRate: sprite.frameRate,
+      repeat: sprite.repeat,
+    });
+  }
+
+  // method to load assets to the game
+  loadAsset() {
+    this.add.image(0, 0, "background").setOrigin(0, 0);
+    const ground = this.physics.add.staticGroup();
+    ground.create(0, 496, "ground").setOrigin(0, 0).refreshBody();
+    this.player = this.physics.add.sprite(500, 400, "playerIdle");
+    this.fruitTarget = this.physics.add
+      .sprite(this.getRandomX(), 0, this.getRandomObject(fruitSprite).name)
+      .setOrigin(0, 0)
+      .setScale(fruitState.scale);
+
+    this.hazardTarget = this.physics.add.sprite(
+      this.getRandomX(),
+      0,
+      hazardState.name
+    );
+
+    playerSprite.map((sprite) => {
+      this.createAnimSprite(sprite);
+    });
+    fruitSprite.map((sprite) => {
+      this.createAnimSprite(sprite);
+    });
+    hazardSprite.map((hazard) => {
+      this.anims.create({
+        key: hazard.name,
+        frames: [
+          {
+            key: hazard.name,
+            frame: 0,
+          },
+        ],
+        frameRate: 20,
+      });
+    });
+
+    // initialize game objects properties
+    this.player.setBounce(0.2);
+    this.player.setCollideWorldBounds(true);
+    this.player.body.setGravityY(speedDown);
+    this.physics.add.collider(this.player, ground);
+
+    this.fruitTarget.setMaxVelocity(0, this.fruitSpeed);
+    this.hazardTarget.setMaxVelocity(0, this.hazardSpeed);
+    this.physics.add.overlap(
+      this.fruitTarget,
+      this.player,
+      this.fruitTargetHit,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.hazardTarget,
+      this.player,
+      this.hazardTargetHit,
+      null,
+      this
+    );
+
+    // timer event for the game timer, game over called when 30 secs is over
+    this.timedEvent = this.time.delayedCall(30000, this.gameOver, [], this);
     
   }
 
-createAnimSprite(sprite) {
-  this.anims.create({
-    key: sprite.key,
-    frames: this.anims.generateFrameNumbers(sprite.name, {
-      start: 0,
-      end: sprite.endFrame,
-    }),
-    frameRate: sprite.frameRate,
-    repeat: sprite.repeat,
-  });
-}
+  // update method for animations
+  update() {
 
+    // check if assets are loaded
+    if (this.player) {
 
+      // get incapacitated timer when player gets hit by hazard
+      const hitProgress = this.hitTimedEvent.getRemainingSeconds();
+      // get remaining time from timer 
+      this.remainingTime = this.timedEvent.getRemainingSeconds();
 
-  loadAsset() {
-  this.add.image(0, 0, "background").setOrigin(0, 0);
-  const ground = this.physics.add.staticGroup();
-  ground.create(0, 496, "ground").setOrigin(0, 0).refreshBody();
-  this.player = this.physics.add.sprite(500, 400, "playerIdle");
-  this.fruitTarget = this.physics.add
-      .sprite(this.getRandomX(), 0, this.getRandomObject(fruitSprite).name)
-      .setOrigin(0, 0).setScale(fruitState.scale);
+      // store remaining time in time event
+      this.game.events.emit(
+        "storeRemainingTime",
+        Math.round(this.remainingTime).toString()
+      );
 
   
+      // checks if incapacitated timer reaches 0, reset playerhit
+    if (hitProgress === 0) {
+      isPlayerHit = false;
+    }
 
-  playerSprite.map((sprite) => { this.createAnimSprite(sprite)})
-  fruitSprite.map((sprite) => { this.createAnimSprite(sprite)})
-  hazardSprite.map((hazard) => {
-    this.anims.create({
-      key: hazard.name,
-      frames: [{
-        key: hazard.name,
-        frame: 0,
-      }],
-      frameRate: 20,
-    })
-  })
+    // play animations for fruits
+      this.fruitTarget.anims.play(fruitState.name, true);
 
-
-  this.player.setBounce(0.2);
-  this.player.setCollideWorldBounds(true);
-  this.player.body.setGravityY(speedDown);
-  this.physics.add.collider(this.player, ground);
-
-  this.fruitTarget.setMaxVelocity(0, this.fruitSpeed);
-  // this.hazardTarget.setMaxVelocity(0, this.hazardSpeed);
-  // this.physics.add.overlap(this.fruitTarget, this.player, this.fruitTargetHit, null, this)
-  // this.physics.add.overlap(this.hazardTarget, this.player, this.hazardTargetHit, null, this)
-
-  // this.game.events.emit('storeRemainingTime', Math.round(this.remainingTime).toString());
-  this.timedEvent  = this.time.delayedCall(30000, this.gameOver, [], this)
-  }
-
-  update() {
-    if (this.player) {
-      this.remainingTime = this.timedEvent.getRemainingSeconds();
-      this.game.events.emit('storeRemainingTime', Math.round(this.remainingTime).toString());
-
-      this.fruitTarget.anims.play(fruitState.name, true)
-
+      // reset fruits y location to 0 and x location randomly after reaching end of the canvas
       if (this.fruitTarget.y >= 576) {
         fruitState = this.getRandomObject(fruitSprite);
         this.fruitTarget.setY(0);
-        this.fruitTarget.setX(this.getRandomX()).setScale(fruitState.scale)
+        this.fruitTarget.setX(this.getRandomX()).setScale(fruitState.scale);
       }
 
+      // reset hazards y location to 0 and x location randomly after reaching end of the canvas
+      if (this.hazardTarget.y >= 576) {
+        hazardState = this.getRandomObject(hazardSprite);
+        this.hazardTarget.setY(0);
+        this.hazardTarget.setX(this.getRandomX()).setScale(hazardState.scale);
+        // set time delay when hazard is spawned
+        this.hitTimedEvent = new Phaser.Time.TimerEvent({
+          delay: hazardState.delay,
+        });
+      }
+
+      // player movement
       const { left, right } = this.cursor;
-      if (left.isDown) {
-        this.player.setVelocityX(-this.playerSpeed);
-        this.player.anims.play("left", true);
-      } else if (right.isDown) {
-        this.player.setVelocityX(this.playerSpeed);
-        this.player.anims.play("right", true);
-      } else {
+      // if player is hit play hit animation and cant move
+      if (isPlayerHit) {
         this.player.setVelocityX(0);
-        this.player.anims.play("idle", true);
-      } 
-    
-    
-    
-    
-    
-    
+        this.player.anims.play("hit", true);
+        // else execute normal animation based on key input
+      } else {
+        if (left.isDown) {
+          this.player.setVelocityX(-this.playerSpeed);
+          this.player.anims.play("left", true);
+        } else if (right.isDown) {
+          this.player.setVelocityX(this.playerSpeed);
+          this.player.anims.play("right", true);
+        } else {
+          this.player.setVelocityX(0);
+          this.player.anims.play("idle", true);
+        } 
+      }
     }
   }
 
-
-
-
+  // method on imbedding sprite images to page
   createSprite(spriteObj) {
-    const image = new Image()
+    const image = new Image();
     image.onload = () => {
       this.textures.addSpriteSheet(spriteObj.name, image, {
         frameWidth: spriteObj.frameWidth,
-        frameHeight: spriteObj.frameHeight
-      })
-    }
-    image.src = spriteObj.image
+        frameHeight: spriteObj.frameHeight,
+      });
+    };
+    image.src = spriteObj.image;
   }
 
+  // generate random number based on width of canvas
   getRandomX() {
-    return Math.floor(Math.random() * 1000)
+    return Math.floor(Math.random() * 1000);
   }
 
+  // generate random object based on input array
   getRandomObject(type) {
-    const randomIndex = Math.floor(Math.random() * type.length)
+    const randomIndex = Math.floor(Math.random() * type.length);
     const randomObject = type[randomIndex];
-    return randomObject
+    return randomObject;
   }
 
+  // method when fruit hits player
+  fruitTargetHit() {
+    this.points += fruitState.points;
+    // store points to event
+    this.game.events.emit("storedScore", this.points);
+    // generate random fruit after points stored
+    fruitState = this.getRandomObject(fruitSprite);
+
+    // reset fruits xy location
+    this.fruitTarget.setY(0);
+    this.fruitTarget.setX(this.getRandomX()).setScale(fruitState.scale);
+  }
+
+  // method when hazard hits player
+  hazardTargetHit() {
+    isPlayerHit = true;
+    // add time event when incapacitated
+    this.time.addEvent(this.hitTimedEvent);
+    // get random hazard 
+    hazardState = this.getRandomObject(hazardSprite);
+    // reset hazards xy location
+    this.hazardTarget.setY(0);
+    this.hazardTarget.setX(this.getRandomX()).setScale(hazardState.scale);
+  }
+
+  // method for gameover state
   gameOver() {
-    console.log('Game Over');
-    this.game.events.emit('gameOver', true);
+    console.log("Game Over");
+    // set event gameover to true
+    this.game.events.emit("gameOver", true);
   }
 }

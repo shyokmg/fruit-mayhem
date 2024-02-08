@@ -7,8 +7,10 @@ import Auth from "../utils/auth";
 import { SAVE_SCORE } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 
-
+// component for rendering game scene
 const GameComp = () => {
+
+  // set up hooks for game ui
   const {level} = useParams();
   const [score, setScore] = useState(0);
   const [time, setTime] = useState(0);
@@ -17,7 +19,7 @@ const GameComp = () => {
   const gameRef = useRef(null);
   const [saveScore, {error, data}] = useMutation(SAVE_SCORE);
   
-
+// configuration for phaser game engine
   const config = {
     type: Phaser.AUTO,
     parent: "phaser-container",
@@ -33,21 +35,25 @@ const GameComp = () => {
     },
   };
   
-
+// render the game ui properties in use effect
   useEffect(() => {
     const game = new Phaser.Game(config);
     gameRef.current = game;
+
+    // store level data into event
     game.events.emit('currentLevel', level);
 
-    // console.log(game)
+    // listen to stored score event and use hook to set score
     game.events.on('storedScore', (data) => {
       setScore(data);
     });
 
+    // listen to stored time event and use hook to set time
     game.events.on('storeRemainingTime', (data) => {
       setTime(data);
     });
 
+    // listen to stored gamestate event and set to gameover state
     game.events.on('gameOver', (data) => {
       if (data) {
         game.pause(true);
@@ -61,6 +67,7 @@ const GameComp = () => {
   }, []);
 
   const navigate = useNavigate();
+  // handle onclick events for buttons
   const handlePauseButton = () => setPauseButton((prevButton) => !prevButton);
   const handleRetryButton = () => window.location.reload() ;
   const handleExitGame = () => {
@@ -68,6 +75,7 @@ const GameComp = () => {
     navigate('/gamelevels')
   };
 
+  // use effect for pause and resuming the game
   useEffect(() => {
     const game = gameRef.current;
     if (game) {
@@ -79,6 +87,7 @@ const GameComp = () => {
     }
   }, [pauseButton]);
   
+  // handle saving score after game is over
   const handleSaveScore = async () => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     const gameData = {
@@ -101,6 +110,7 @@ const GameComp = () => {
 
   }
 
+  // render game ui
   return (
     <InGameUI 
       level ={level}

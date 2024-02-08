@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef  } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import React from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { MdOutlineReplayCircleFilled, MdExitToApp } from "react-icons/md";
 import { BiSolidExit } from "react-icons/bi";
-import Phaser from "phaser";
+
 import { Button } from 'antd';
 
+// Component for rendering ingame ui and buttons
 const InGameUI = (props) => {
 
   return (

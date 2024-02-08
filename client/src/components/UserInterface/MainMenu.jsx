@@ -4,10 +4,12 @@ import Auth from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import { FaPlayCircle } from "react-icons/fa";
 import { SiGamebanana } from "react-icons/si";
-// const { Meta } = Card;
 
+// component for main menu buttons
 const MainMenu = () => {
     const navigate = useNavigate();
+
+    // on click event when play button is pressed
     const handleStartGame = () => { navigate('/gamelevels') };
  
   return (

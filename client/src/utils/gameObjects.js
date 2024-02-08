@@ -1,25 +1,4 @@
-// import cherries from "../assets/fruits/cherries.png";
-// import apples from "../assets/fruits/apples.png";
-// import bananas from "../assets/fruits/bananas.png";
-// import pineapples from "../assets/fruits/pineapples.png";
-// import melons from "../assets/fruits/melons.png";
-// import spikedBall from "../assets/hazards/spikedBall.png";
-// import playerIdleRight from "../assets/player/playerIdleRight.png";
-// import playerRunRight from "../assets/player/playerRunRight.png";
-// import playerRunLeft from "../assets/player/playerRunLeft.png";
-// import playerHit from "../assets/player/playerHit.png";
-
-// const cherries = "/src/assets/fruits/cherries.png";
-// const apples = "/src/assets/fruits/apples.png";
-// const bananas = "/src/assets/fruits/bananas.png";
-// const pineapples = "/src/assets/fruits/pineapples.png";
-// const melons = "/src/assets/fruits/melons.png";
-// const spikedBall = "/src/assets/hazards/spikedBall.png"
-// const playerIdleRight = "/src/assets/player/playerIdleRight.png";
-// const playerRunRight = "/src/assets/player/playerRunRight.png";
-// const playerRunLeft = "/src/assets/player/playerRunLeft.png";
-// const playerHit = "/src/assets/player/playerHit.png";
-
+// import base64 images
 import {
   playerHit,
   playerIdleRight,
@@ -33,8 +12,11 @@ import {
   spikedBall
 } from "../assets/base64-images.js";
 
+
+// export speed of gravity by level
 export const levelSpeed = [1, 1.2, 1.4, 1.5, 2.0];
 
+// exports fruit sprite properties
 export const fruitSprite = [
   {
     name: "cherries",
@@ -98,6 +80,7 @@ export const fruitSprite = [
   },
 ];
 
+// exports hazard sprite properties
 export const hazardSprite = [
   {
     name: "spikedBall",
@@ -128,6 +111,7 @@ export const hazardSprite = [
   },
 ];
 
+// exports player sprite properties
 export const playerSprite = [
   {
     name: "playerIdle",

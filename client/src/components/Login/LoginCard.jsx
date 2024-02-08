@@ -4,8 +4,8 @@ import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 
 const AppLoginCard = () => {
-  // set modal display state
-//   const [showModal, setShowModal] = useState(false);
+
+  // create tabs for login card
 const tabList = [
     {
       key: 'tab1',

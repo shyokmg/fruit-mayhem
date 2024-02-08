@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Flex, Card, Row, Col, Button } from "antd";
-import { IoArrowBackCircleSharp } from "react-icons/io5";
+import React from "react";
+import { Flex, Row, Col, Button } from "antd";
 import LevelCards from "../components/UserInterface/LevelCards";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
+// component for rendering game levels
 const GameLevels = () => {
+
+  // call query for level data
   const { loading, data } = useQuery(GET_ME);
   const token = Auth.loggedIn() ? Auth.getToken() : null;
   if (!token) {
